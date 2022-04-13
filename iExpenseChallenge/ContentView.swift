@@ -33,6 +33,7 @@ struct ContentView: View {
                         Spacer()
                         Text("\(eachItem.price, format: .currency(code: "EUR"))")
                             .font(.title)
+                            .foregroundColor(stylePrice(of: eachItem))
                     }
                 }
                 .onDelete(perform: removeItems)
@@ -60,9 +61,26 @@ struct ContentView: View {
         
         expenses.items.remove(atOffsets: offsets)
     }
+    
+    
+    func stylePrice(of item: ExpenseItem)
+    -> Color {
+        
+        switch item.price {
+        case 0...10: return Color.green
+        case 11...50: return Color.blue
+        case 51...100: return Color.orange
+        default: return Color.red
+        }
+    }
+    
+    
+    
     // MARK: - HELPERMETHODS
 }
-
+/*
+ expenses under $10 should have one style, expenses under $100 another, and expenses over $100 a third style.
+ */
 
 
 

@@ -15,3 +15,31 @@ struct iExpenseChallengeApp: App {
         }
     }
 }
+
+
+/*
+ struct ContentView: View {
+     
+     // MARK: - PROPERTY WRAPPERS
+     // MARK: - PROPERTIES
+     // MARK: - INITIALIZERS
+     // MARK: - COMPUTED PROPERTIES
+     var body: some View {
+         Text("Hello, world!")
+             .padding()
+     }
+     
+     
+     
+     // MARK: - METHODS
+     // MARK: - HELPERMETHODS
+ }
+ */
+/*
+ // MARK: - PROPERTY WRAPPERS
+ // MARK: - PROPERTIES
+ // MARK: - INITIALIZERS
+ // MARK: - COMPUTED PROPERTIES
+ // MARK: - METHODS
+ // MARK: - HELPERMETHODS
+ */
