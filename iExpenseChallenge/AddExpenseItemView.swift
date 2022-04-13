@@ -16,13 +16,13 @@ struct AddExpenseItemView: View {
     
     @State private var name: String = ""
     @State private var price: Double = 0.00
-    @State private var selectedExpenseType: String = ExpenseType.personnal.rawValue
+    @State private var selectedExpenseType: String = ExpenseType.personal.rawValue
     
     
     
     // MARK: - PROPERTIES
     let expenseTypes: Array<ExpenseType.RawValue> = [
-        ExpenseType.business.rawValue, ExpenseType.personnal.rawValue
+        ExpenseType.business.rawValue, ExpenseType.personal.rawValue
     ]
     // MARK: - INITIALIZERS
     // MARK: - COMPUTED PROPERTIES

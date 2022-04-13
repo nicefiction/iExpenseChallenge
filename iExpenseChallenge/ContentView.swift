@@ -19,24 +19,57 @@ struct ContentView: View {
     // MARK: - COMPUTED PROPERTIES
     var body: some View {
         
+        let businessExpenses = expenses.items.filter {
+            $0.type == "business"
+        }
+        
+        
+        let personalExpenses = expenses.items.filter {
+            $0.type == "personal"
+        }
+        
+        
         NavigationView {
             List {
-                ForEach(expenses.items) { (eachItem: ExpenseItem) in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("\(eachItem.name)")
-                                .font(.headline)
-                            Text("\(eachItem.type)")
-                                .font(.subheadline.smallCaps())
-                                .foregroundColor(.secondary)
+                Section("business") {
+                    ForEach(businessExpenses) { (eachItem: ExpenseItem) in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("\(eachItem.name)")
+                                    .font(.headline)
+//                                Text("\(eachItem.type)")
+                                Text("\(Date.now.formatted())")
+                                    .font(.subheadline.smallCaps())
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
+                            Text("\(eachItem.price, format: .currency(code: "EUR"))")
+                                .font(.title)
+                                .foregroundColor(stylePrice(of: eachItem))
                         }
-                        Spacer()
-                        Text("\(eachItem.price, format: .currency(code: "EUR"))")
-                            .font(.title)
-                            .foregroundColor(stylePrice(of: eachItem))
                     }
+                    .onDelete(perform: removeBusinessItems)
                 }
-                .onDelete(perform: removeItems)
+                
+                Section("personal") {
+                    ForEach(personalExpenses) { (eachItem: ExpenseItem) in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("\(eachItem.name)")
+                                    .font(.headline)
+//                                Text("\(eachItem.type)")
+                                Text("\(Date.now.formatted())")
+                                    .font(.subheadline.smallCaps())
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
+                            Text("\(eachItem.price, format: .currency(code: "EUR"))")
+                                .font(.title)
+                                .foregroundColor(stylePrice(of: eachItem))
+                        }
+                    }
+                    .onDelete(perform: removePersonalItems)
+                }
             }
             .navigationTitle(Text("iExpense"))
             .toolbar {
@@ -58,8 +91,44 @@ struct ContentView: View {
     // MARK: - METHODS
     func removeItems(at offsets: IndexSet)
     -> Void {
-        
+
         expenses.items.remove(atOffsets: offsets)
+    }
+    
+    
+//    func removeBusinessItems(at offsets: IndexSet)
+//    -> Void {
+//
+//        var businessExpenses = expenses.items.filter {
+//            $0.type == "business"
+//        }
+//        businessExpenses.remove(atOffsets: offsets)
+//    }
+    
+    
+    func removeBusinessItems(at offsets: IndexSet)
+    -> Void {
+        
+        var businessExpenses = expenses.items.filter {
+            $0.type == "business"
+        }
+        businessExpenses.remove(atOffsets: offsets)
+        expenses.items = businessExpenses + expenses.items.filter {
+            $0.type == "personal"
+        }
+    }
+    
+    
+    func removePersonalItems(at offsets: IndexSet)
+    -> Void {
+        
+        var personalExpenses = expenses.items.filter {
+            $0.type == "personal"
+        }
+        personalExpenses.remove(atOffsets: offsets)
+        expenses.items = personalExpenses + expenses.items.filter {
+            $0.type == "business"
+        }
     }
     
     
@@ -78,9 +147,8 @@ struct ContentView: View {
     
     // MARK: - HELPERMETHODS
 }
-/*
- expenses under $10 should have one style, expenses under $100 another, and expenses over $100 a third style.
- */
+
+
 
 
 
